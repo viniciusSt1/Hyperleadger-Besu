@@ -1,2 +1,7 @@
 networkFiles/*
-networkFiles-staging/*
+*.tar.gz 
+besu-*/
+jdk-*/
+*.jfr
+genesis.json
+Permissioned-Network/
