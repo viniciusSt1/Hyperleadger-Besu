@@ -7,8 +7,8 @@ Este guia descreve a configuração de uma rede permissionada utilizando o mecan
 Certifique-se de ter as seguintes ferramentas instaladas:
 
 - Java
-- Besu v24.7.0
-- cURL, wget, tar
+- Besu v25.9.0
+- curl, wget, tar
 - Docker
 - Docker-Compose
 
@@ -17,26 +17,26 @@ Certifique-se de ter as seguintes ferramentas instaladas:
 #### Besu
 
 > [!IMPORTANT]
-> <sup>Estamos utilizando a versão 24.7.0 do Besu. Para utilizar outra versão, altere a URL de download e atualize as variáveis de ambiente conforme necessário.</sup>
+> <sup>Estamos utilizando a versão 25.9.0 do Besu. Para utilizar outra versão, altere a URL de download e atualize as variáveis de ambiente conforme necessário.</sup>
 
 ``` 
-wget https://github.com/hyperledger/besu/releases/download/24.7.0/besu-24.7.0.tar.gz
-tar -xvf besu-24.7.0.tar.gz 
-rm besu-24.7.0.tar.gz 
-export PATH=$(pwd)/besu-24.7.0/bin:$PATH
+wget https://github.com/hyperledger/besu/releases/download/25.9.0/besu-25.9.0.tar.gz
+tar -xvf besu-25.9.0.tar.gz 
+rm besu-25.9.0.tar.gz 
+export PATH=$(pwd)/besu-25.9.0/bin:$PATH
 
 ```
 
 #### JAVA
 
 > [!IMPORTANT]
-> <sup>Certifique-se de que o diretório `jdk-21.0.6/` foi extraído corretamente na raiz do projeto.</sup>
+> <sup>Certifique-se de que o diretório `jdk-21.0.8/` foi extraído corretamente na raiz do projeto.</sup>
 
 ```
 wget https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.tar.gz 
 tar -xvf jdk-21_linux-x64_bin.tar.gz
 rm jdk-21_linux-x64_bin.tar.gz
-export JAVA_HOME=$(pwd)/jdk-21.0.6
+export JAVA_HOME=$(pwd)/jdk-21.0.8
 
 ```
 Para verificar a versão instalada:
@@ -74,7 +74,7 @@ Formato esperado do arquivo permissions_config.toml:
 nodes-allowlist=[
   "enode://<public-key-1>@<ip-node-1>:30303",
   ...
-  "enode://<public-key-6>@<ip-node-6>:30303"
+  "enode://<public-key-6>@<ip-node-6>:30308"
 ]
 accounts-allowlist=[
   "0x<account-id-node-1>",
@@ -113,7 +113,7 @@ Permissioned-Network/
 Crie a imagem Docker personalizada do Besu:
 
 ```
-docker build --no-cache -f Dockerfile -t besu-image-local:1.0 .
+docker build --no-cache -f Dockerfile -t besu-image-local:2.0 .
 ```
 
 ### 2. Inicialização dos Nós
