@@ -7,7 +7,7 @@ Este guia descreve a configuração de uma rede permissionada utilizando o mecan
 Certifique-se de ter as seguintes ferramentas instaladas:
 
 - Java
-- Besu v25.9.0
+- Besu v25.10.0
 - curl, wget, tar
 - Docker
 - Docker-Compose
@@ -17,29 +17,31 @@ Certifique-se de ter as seguintes ferramentas instaladas:
 #### Besu
 
 > [!IMPORTANT]
-> <sup>Estamos utilizando a versão 25.9.0 do Besu. Para utilizar outra versão, altere a URL de download e atualize as variáveis de ambiente conforme necessário.</sup>
+> <sup>Estamos utilizando a versão 25.10.0 do Besu. Para utilizar outra versão, altere a URL de download e atualize as variáveis de ambiente conforme necessário.</sup>
 
 ``` 
-wget https://github.com/hyperledger/besu/releases/download/25.9.0/besu-25.9.0.tar.gz
-tar -xvf besu-25.9.0.tar.gz 
-rm besu-25.9.0.tar.gz 
-export PATH=$(pwd)/besu-25.9.0/bin:$PATH
-
+wget https://github.com/hyperledger/besu/releases/download/25.10.0/besu-25.10.0.tar.gz
+tar -xvf besu-25.10.0.tar.gz 
+rm besu-25.10.0.tar.gz 
+export PATH=$(pwd)/besu-25.10.0/bin:$PATH
 ```
 
 #### JAVA
 
 > [!IMPORTANT]
-> <sup>Certifique-se de que o diretório `jdk-21.0.8/` foi extraído corretamente na raiz do projeto.</sup>
+> <sup>Certifique-se de que o diretório `jdk-21.0.9/` foi extraído corretamente na raiz do projeto.</sup>
 
 ```
 wget https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.tar.gz 
 tar -xvf jdk-21_linux-x64_bin.tar.gz
 rm jdk-21_linux-x64_bin.tar.gz
-export JAVA_HOME=$(pwd)/jdk-21.0.8
-
+export JAVA_HOME=$(pwd)/jdk-21.0.9
 ```
-Para verificar a versão instalada:
+
+> [!NOTE]
+> <sup>Se atente a versão do jdk baixada para criar a variável de ambiente corretamente.</sup>
+
+Verifique a versão da besu instalada:
 ```
 besu --version
 ```
@@ -58,7 +60,7 @@ besu operator generate-blockchain-config \
 
 ### 2. Copiar o arquivo genesis.json com extraData
 ```
-cp networkFiles/genesis.json ./
+cp networkFiles/genesis.json ./Permissioned-Network
 ```
 
 ### 3. Geração do arquivo permissions_config.toml
@@ -107,21 +109,25 @@ Permissioned-Network/
 > [!IMPORTANT]
 > <sup>Certifique-se de verficar se os arquivos corretos foram copiados para cada um dos nós da rede (config.toml, key ...).</sup>
 
+### 5. Atualize o endereços e IPs do nós da rede
+Atualize todas as flags --bootnodes para os endereços e IPs dos nós 1 e 3 respectivamente
+Os endereços podem ser verificados em Node-1/data/key.pub e Node-3/data/key.pub respectivamente
+
 ## Etapa 2: Execução da Rede
 
 ### 1. Construção da Imagem Docker
 Crie a imagem Docker personalizada do Besu:
 
 ```
-docker build --no-cache -f Dockerfile -t besu-image-local:2.0 .
+docker build --no-cache -f Dockerfile -t besu-image-local:25.10.0 .
 ```
 
+### Para Docker Desktop
 ### 2. Inicialização dos Nós
 Suba os nós da rede:
 ```
 docker-compose up -d
 ```
-
 
 ### 3. Finalização da Rede
 Para derrubar todos os containers:
@@ -129,6 +135,34 @@ Para derrubar todos os containers:
 ```
 docker-compose down
 ```
+### Para Docker CE
+Suba os nós da rede:
+docker compose up -d
+
+Ver os logs
+docker compose logs -f
+
+Containers ativos:
+docker ps
+
+Containers ativos e parados:
+docker ps -a
+
+Ver as imagens
+docker images
+
+Apagar container
+docker rm -f <container_id_ou_nome>
+
+Apagar todos containers:
+docker compose down
+
+Apagar imagens:
+docker rmi <image_id_ou_nome>
+
+Informações:
+docker system df
+docker stats (porcentagens cpu docker ps)
 
 ## Etapa 3: Testes de Conectividade e Estado da Rede 
 Utilize os comandos abaixo para validar o estado da rede:

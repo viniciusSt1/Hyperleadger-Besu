@@ -2,14 +2,13 @@ version: "3.8"
 
 services:
   node1:
-    image: besu-image-local:2.0
-    container_name: node1
+    image: besu-image-local:25.10.0
+    container_name: node-besu1
     network_mode: "host"
     command: >
       --data-path=/opt/besu/data
       --genesis-file=/opt/besu/genesis.json
       --rpc-http-enabled
-      --rpc-http-api=ETH,NET,QBFT,ADMIN
       --host-allowlist="*"
       --rpc-http-cors-origins="all"
       --profile=ENTERPRISE
@@ -30,19 +29,18 @@ services:
       --permissions-accounts-config-file-enabled
       --permissions-nodes-config-file-enabled
     volumes:
-      - ./genesis.json:/opt/besu/genesis.json
+      - ./Permissioned-Network/genesis.json:/opt/besu/genesis.json
       - ./Permissioned-Network/Node-1/data:/opt/besu/data
  
   node2:
-    image: besu-image-local:2.0
-    container_name: node2
+    image: besu-image-local:25.10.0
+    container_name: node-besu2
     network_mode: "host"
     command: >
       --data-path=/opt/besu/data
       --genesis-file=/opt/besu/genesis.json
-      --bootnodes=enode://ec28f5b53ee6f4653a3220b76fb89d6f97b84333ba27e5fe2b8f9f4ec44167d231654416158bccb64c4329fc037d95e6f3196f29e2eb86cef6f6f15145de9b83@127.0.0.1:30303,enode://45e59df4941009c6f778f3fab8538f976b4ca2a21bb7402605552ae2d411f4e786df2847af7d737f523b18e6f3142481978f73ea916a3fe5b6b3ca80bf1fee86@127.0.0.1:30305
+      --bootnodes=enode://def2f22894b99173fe042a160494c6e8760241231c0daa78bc227136f624e8fd15f250391eb00a3e535548acc978de5feeff19eb78ccb085f8f7ef88d0fd8690@127.0.0.1:30303,enode://0c20477e0a34dc4fd2d409d18ff6bc3ae5c9401460fdc6c52bc8361b68b0f06f555183e6bc01d7c1b3b18b18e02d110b9e27cfca89b283791e936a288814f44b@127.0.0.1:30305
       --rpc-http-enabled
-      --rpc-http-api=ETH,NET,QBFT,ADMIN
       --host-allowlist="*"
       --rpc-http-cors-origins="all"
       --profile=ENTERPRISE
@@ -63,18 +61,17 @@ services:
       --permissions-accounts-config-file-enabled
       --permissions-nodes-config-file-enabled
     volumes:
-      - ./genesis.json:/opt/besu/genesis.json
+      - ./Permissioned-Network/genesis.json:/opt/besu/genesis.json
       - ./Permissioned-Network/Node-2/data:/opt/besu/data
 
   node3:
-    image: besu-image-local:2.0
-    container_name: node3
+    image: besu-image-local:25.10.0
+    container_name: node-besu3
     network_mode: "host"
     command: >
       --data-path=/opt/besu/data
       --genesis-file=/opt/besu/genesis.json
       --rpc-http-enabled
-      --rpc-http-api=ETH,NET,QBFT,ADMIN
       --host-allowlist="*"
       --rpc-http-cors-origins="all"
       --profile=ENTERPRISE
@@ -95,19 +92,18 @@ services:
       --permissions-accounts-config-file-enabled
       --permissions-nodes-config-file-enabled
     volumes:
-      - ./genesis.json:/opt/besu/genesis.json
+      - ./Permissioned-Network/genesis.json:/opt/besu/genesis.json
       - ./Permissioned-Network/Node-3/data:/opt/besu/data
 
   node4:
-    image: besu-image-local:2.0
-    container_name: node4
+    image: besu-image-local:25.10.0
+    container_name: node-besu4
     network_mode: "host"
     command: >
       --data-path=/opt/besu/data
       --genesis-file=/opt/besu/genesis.json
-      --bootnodes=enode://ec28f5b53ee6f4653a3220b76fb89d6f97b84333ba27e5fe2b8f9f4ec44167d231654416158bccb64c4329fc037d95e6f3196f29e2eb86cef6f6f15145de9b83@127.0.0.1:30303,enode://45e59df4941009c6f778f3fab8538f976b4ca2a21bb7402605552ae2d411f4e786df2847af7d737f523b18e6f3142481978f73ea916a3fe5b6b3ca80bf1fee86@127.0.0.1:30305
+      --bootnodes=enode://def2f22894b99173fe042a160494c6e8760241231c0daa78bc227136f624e8fd15f250391eb00a3e535548acc978de5feeff19eb78ccb085f8f7ef88d0fd8690@127.0.0.1:30303,enode://0c20477e0a34dc4fd2d409d18ff6bc3ae5c9401460fdc6c52bc8361b68b0f06f555183e6bc01d7c1b3b18b18e02d110b9e27cfca89b283791e936a288814f44b@127.0.0.1:30305
       --rpc-http-enabled
-      --rpc-http-api=ETH,NET,QBFT,ADMIN
       --host-allowlist="*"
       --rpc-http-cors-origins="all"
       --profile=ENTERPRISE
@@ -128,19 +124,18 @@ services:
       --permissions-accounts-config-file-enabled
       --permissions-nodes-config-file-enabled
     volumes:
-      - ./genesis.json:/opt/besu/genesis.json
+      - ./Permissioned-Network/genesis.json:/opt/besu/genesis.json
       - ./Permissioned-Network/Node-4/data:/opt/besu/data
 
   node5:
-    image: besu-image-local:2.0
-    container_name: node5
+    image: besu-image-local:25.10.0
+    container_name: node-besu5
     network_mode: "host"
     command: >
       --data-path=/opt/besu/data
       --genesis-file=/opt/besu/genesis.json
-      --bootnodes=enode://ec28f5b53ee6f4653a3220b76fb89d6f97b84333ba27e5fe2b8f9f4ec44167d231654416158bccb64c4329fc037d95e6f3196f29e2eb86cef6f6f15145de9b83@127.0.0.1:30303,enode://45e59df4941009c6f778f3fab8538f976b4ca2a21bb7402605552ae2d411f4e786df2847af7d737f523b18e6f3142481978f73ea916a3fe5b6b3ca80bf1fee86@127.0.0.1:30305
+      --bootnodes=enode://def2f22894b99173fe042a160494c6e8760241231c0daa78bc227136f624e8fd15f250391eb00a3e535548acc978de5feeff19eb78ccb085f8f7ef88d0fd8690@127.0.0.1:30303,enode://0c20477e0a34dc4fd2d409d18ff6bc3ae5c9401460fdc6c52bc8361b68b0f06f555183e6bc01d7c1b3b18b18e02d110b9e27cfca89b283791e936a288814f44b@127.0.0.1:30305
       --rpc-http-enabled
-      --rpc-http-api=ETH,NET,QBFT,ADMIN
       --host-allowlist="*"
       --rpc-http-cors-origins="all"
       --profile=ENTERPRISE
@@ -161,19 +156,18 @@ services:
       --permissions-accounts-config-file-enabled
       --permissions-nodes-config-file-enabled
     volumes:
-      - ./genesis.json:/opt/besu/genesis.json
+      - ./Permissioned-Network/genesis.json:/opt/besu/genesis.json
       - ./Permissioned-Network/Node-5/data:/opt/besu/data
 
   node6:
-    image: besu-image-local:2.0
-    container_name: node6
+    image: besu-image-local:25.10.0
+    container_name: node-besu6
     network_mode: "host"
     command: >
       --data-path=/opt/besu/data
       --genesis-file=/opt/besu/genesis.json
-      --bootnodes=enode://ec28f5b53ee6f4653a3220b76fb89d6f97b84333ba27e5fe2b8f9f4ec44167d231654416158bccb64c4329fc037d95e6f3196f29e2eb86cef6f6f15145de9b83@127.0.0.1:30303,enode://45e59df4941009c6f778f3fab8538f976b4ca2a21bb7402605552ae2d411f4e786df2847af7d737f523b18e6f3142481978f73ea916a3fe5b6b3ca80bf1fee86@127.0.0.1:30305
+      --bootnodes=enode://def2f22894b99173fe042a160494c6e8760241231c0daa78bc227136f624e8fd15f250391eb00a3e535548acc978de5feeff19eb78ccb085f8f7ef88d0fd8690@127.0.0.1:30303,enode://0c20477e0a34dc4fd2d409d18ff6bc3ae5c9401460fdc6c52bc8361b68b0f06f555183e6bc01d7c1b3b18b18e02d110b9e27cfca89b283791e936a288814f44b@127.0.0.1:30305
       --rpc-http-enabled
-      --rpc-http-api=ETH,NET,QBFT,ADMIN
       --host-allowlist="*"
       --rpc-http-cors-origins="all"
       --profile=ENTERPRISE
@@ -194,7 +188,7 @@ services:
       --permissions-accounts-config-file-enabled
       --permissions-nodes-config-file-enabled
     volumes:
-      - ./genesis.json:/opt/besu/genesis.json
+      - ./Permissioned-Network/genesis.json:/opt/besu/genesis.json
       - ./Permissioned-Network/Node-6/data:/opt/besu/data
 
 networks:
