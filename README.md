@@ -49,7 +49,19 @@ besu --version
 > <sup>Este tutorial foi baseado na doc oficial da Besu [Hyperledger Besu Tutorial QBFT](https://besu.hyperledger.org/private-networks/tutorials/qbft) e [Hyperledger Besu Tutorial Permissioning](https://besu.hyperledger.org/private-networks/tutorials/permissioning)</sup>
 
 ## Etapa 1: Geração das Chaves Criptográficas e Arquivos de Configuração
+
 ### 1. Geração dos arquivos da blockchain e chaves privadas
+> [!IMPORTANT]
+> <sup>Estamos criando uma rede com 12 nós, o que pode ser um pouco grande. Para criar uma rede com um número menor de nós edite o arquivo genesis_QBFT.json diminuindo o valor de count, ou subindo apenas os nós necessários utilizando o docker</sup>
+
+```
+"blockchain": {
+    "nodes": {
+      "generate": true,
+      "count": 12 // ---> Edite o números de nós da rede aqui
+    }
+}
+```
 
 ```
 besu operator generate-blockchain-config \
@@ -58,12 +70,7 @@ besu operator generate-blockchain-config \
   --private-key-file-name=key
 ```
 
-### 2. Copiar o arquivo genesis.json com extraData
-```
-cp networkFiles/genesis.json ./Permissioned-Network
-```
-
-### 3. Geração do arquivo permissions_config.toml
+### 2. Geração do arquivo permissions_config.toml
 Certifique-se de que o script de geração está com permissão de execução:
 
 ```
@@ -76,19 +83,23 @@ Formato esperado do arquivo permissions_config.toml:
 nodes-allowlist=[
   "enode://<public-key-1>@<ip-node-1>:30303",
   ...
-  "enode://<public-key-6>@<ip-node-6>:30308"
+  "enode://<public-key-2>@<ip-node-12>:30308"
 ]
 accounts-allowlist=[
   "0x<account-id-node-1>",
   ...
-  "0x<account-id-node-6>"
+  "0x<account-id-node-12>"
 ]
 ```
 > [!NOTE]
 > <sup>Os account-ids são os nomes das pastas geradas automaticamente em networkFiles/.</sup>
 
+### 3. Copiar o arquivo genesis.json com extraData
+```
+cp networkFiles/genesis.json ./Permissioned-Network/
+```
 
-### 4. Crie a estrutura de diretórios para os Nodes
+### 4. Verifique a estrutura de diretórios para os Nodes
 Organize os arquivos conforme a estrutura:
 
 ```
@@ -109,10 +120,6 @@ Permissioned-Network/
 > [!IMPORTANT]
 > <sup>Certifique-se de verficar se os arquivos corretos foram copiados para cada um dos nós da rede (config.toml, key ...).</sup>
 
-### 5. Atualize o endereços e IPs do nós da rede
-Atualize todas as flags --bootnodes para os endereços e IPs dos nós 1 e 3 respectivamente
-Os endereços podem ser verificados em Node-1/data/key.pub e Node-3/data/key.pub respectivamente
-
 ## Etapa 2: Execução da Rede
 
 ### 1. Construção da Imagem Docker
@@ -122,47 +129,81 @@ Crie a imagem Docker personalizada do Besu:
 docker build --no-cache -f Dockerfile -t besu-image-local:25.10.0 .
 ```
 
+### 2. Crie o arquivo docker-compose.yml
+```
+chmod +x generate-docker-compose.sh
+./generate-docker-compose.sh
+```
+
 ### Para Docker Desktop
-### 2. Inicialização dos Nós
+### 3. Inicialização dos Nós
 Suba os nós da rede:
 ```
 docker-compose up -d
 ```
 
-### 3. Finalização da Rede
+### 4. Finalização da Rede
 Para derrubar todos os containers:
 
 ```
 docker-compose down
 ```
+
 ### Para Docker CE
 Suba os nós da rede:
+```
 docker compose up -d
+```
 
 Ver os logs
+```
 docker compose logs -f
+```
 
 Containers ativos:
+```
 docker ps
+```
 
 Containers ativos e parados:
+```
 docker ps -a
+```
 
 Ver as imagens
+```
 docker images
+```
 
 Apagar container
+```
 docker rm -f <container_id_ou_nome>
+```
 
 Apagar todos containers:
+```
 docker compose down
+```
 
 Apagar imagens:
+```
 docker rmi <image_id_ou_nome>
+```
 
 Informações:
+```
 docker system df
-docker stats (porcentagens cpu docker ps)
+```
+```
+docker stats 
+```
+
+> [!NOTE]
+> <sup>Para realizar deploy de contratos é necessário dar permissão para a conta que fizer a transação, para isso edite o arquivo add-account-permission.sh adicionando sua chave pública e rode o script</sup>
+```
+chmod +x add-account-permission.sh
+./add-account-permission.sh
+```
 
 ## Etapa 3: Testes de Conectividade e Estado da Rede 
 Utilize os comandos abaixo para validar o estado da rede:

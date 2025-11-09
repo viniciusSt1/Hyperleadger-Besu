@@ -1,7 +1,7 @@
-networkFiles/*
+networkFiles/
 *.tar.gz 
 besu-*/
 jdk-*/
 *.jfr
-genesis.json
+docker-compose.yml
 Permissioned-Network/
